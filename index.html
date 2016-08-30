@@ -1,0 +1,59 @@
+<head>
+	
+	<title>Gas Calc</title>
+	<!-- Framework -->
+
+	<!-- Vendors script -->
+
+		<script   src="https://code.jquery.com/jquery-3.1.0.min.js"   integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="   crossorigin="anonymous"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQbR8Pln2DrVPteeDs36LWSe_p2gc4kzU"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+	<!-- Supplementary scripts -->
+	
+	<!-- JS  -->
+	
+	<script type = "text/javascript" src = "js/main.js"></script>
+	<script type = "text/javascript" src = "js/map.js"></script>
+
+	<!-- jquery -->
+
+	<!-- CSS -->
+
+</head>
+
+
+<body>
+
+    <select id="year" runat="server" onChange="getSelect(this)">
+    	<option>---Select a year---</option>
+    </select>
+
+    <select id="make" runat="server" onChange="getSelect(this)">
+    	<option>---Select a make---</option>
+    </select>
+    
+    <select id="model" runat="server" onChange="getSelect(this)">
+    	<option>---Select a model---</option>
+    </select>
+    
+    <select id="options" runat="server" onChange="getSelect(this)">
+    	<option>---Select options---</option>
+    </select>
+
+    <br><br>
+
+    <input id="startInput" class="controls" type="text" placeholder="Start">
+    <input id="endInput" class="controls" type="text" placeholder="End">
+
+    <br>
+    
+	<div id="gasMap" style="width:500px;height:380px;"></div>
+
+</body>
+
+<script type="text/javascript">
+    
+    getData('year', 'year');
+	google.maps.event.addDomListener(window, 'load', initialize);
+
+</script>
