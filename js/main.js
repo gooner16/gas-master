@@ -35,7 +35,7 @@ function getData (dataLabel, dest) {
     $(document).ready(function() {
         $.ajax({
             type: 'GET',
-            url: 'http://www.fueleconomy.gov/ws/rest/vehicle/menu/'+dataLabel+'',
+            url: 'https://www.fueleconomy.gov/ws/rest/vehicle/menu/'+dataLabel+'',
             dataType: 'xml',
             success: function(xml) {
                 $(xml).find('menuItem').each(function() {
