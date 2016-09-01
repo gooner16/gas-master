@@ -1,6 +1,7 @@
 var selYear, selMake, selModel, selOption, vehicleid;
+var vehicleInfo = new Array(10);
 
-//$("#droplist").empty(); -> in jquery
+//clears options from dropdown box
 function removeOptions(selectbox)
 {
     
@@ -31,6 +32,37 @@ function removeOptions(selectbox)
     };
 }
 
+//get the emission data
+function getEmissions (id) {
+    $(document).ready(function() {
+        $.ajax({
+            type: 'GET',
+            url: 'http://www.fueleconomy.gov/ws/rest/vehicle/'+id+'',
+            dataType: 'xml',
+            success: function(xml) {
+
+                for (var i = 0; i < vehicleInfo.length; i++) {        
+                    var tempInfo = {
+                        'label': ,
+                        'val': ,
+                        'id': ,
+                    }
+                    vehicleInfo.push(tempInfo);
+                };
+
+                $(xml).find('menuItem').each(function() {
+                    if (selOption == $(this).find("text").text()) {
+                        vehicleid = $(this).find("value").text();
+                        console.log(vehicleid);
+                        getEmissions();
+                    } 
+                });
+            }
+        });
+    });
+}
+
+//get the vehicle data for dropdowns
 function getData (dataLabel, dest, io) {
     $(document).ready(function() {
         $.ajax({
@@ -38,6 +70,7 @@ function getData (dataLabel, dest, io) {
             url: 'http://www.fueleconomy.gov/ws/rest/vehicle/'+dataLabel+'',
             dataType: 'xml',
             success: function(xml) {
+                //for adding to select box
                 if (io == 1) {
                     $(xml).find('menuItem').each(function() {
                         $('#'+dest+'')
@@ -45,11 +78,13 @@ function getData (dataLabel, dest, io) {
                             .text($(this)
                             .find('text').text()));
                     });
+                //for getting the vehicle id
                 } else if (io == 0){
                     $(xml).find('menuItem').each(function() {
                         if (selOption == $(this).find("text").text()) {
                             vehicleid = $(this).find("value").text();
                             console.log(vehicleid);
+                            getEmissions(vehicleid);
                         } 
                     });
                 }
@@ -58,6 +93,7 @@ function getData (dataLabel, dest, io) {
     });
 }
 
+//organize which data is loaded and cleared when fields are changed
 function getSelect (sel) {
     
     if (sel.id == "year"){
@@ -86,5 +122,3 @@ function getSelect (sel) {
     }
 }
 
-
-    
