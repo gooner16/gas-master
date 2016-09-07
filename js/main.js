@@ -1,5 +1,5 @@
 var selYear, selMake, selModel, selOption, vehicleid;
-var vehicleInfo = new Array(10);
+var vehicleInfo = new Array(6);
 
 //clears options from dropdown box
 function removeOptions(selectbox)
@@ -32,31 +32,38 @@ function removeOptions(selectbox)
     };
 }
 
-//get the emission data
-function getEmissions (id) {
+//grab data for:
+//city08U - unrounded city MPG for fuelType1 (2), (3)
+//cityA08U - unrounded city MPG for fuelType2 (2), (3)
+//comb08U - unrounded combined MPG for fuelType1 (2), (3)
+//combA08U - unrounded combined MPG for fuelType2 (2), (3)
+//highway08U - unrounded highway MPG for fuelType1 (2), (3)
+//highwayA08U - unrounded highway MPG for fuelType2 (2),(3)
+function getEmissions(id) {
+
+    var dataList = ["city08U", "cityA08U", "comb08U", "combA08U", "highway08U", "highwayA08U"];
+
+    for (var i = 0; i < vehicleInfo.length; i++) {
+        var tempInfo = {
+            label: dataList[i],
+            val: null,
+        };
+        vehicleInfo.push(tempInfo);
+    };
+
     $(document).ready(function() {
         $.ajax({
             type: 'GET',
             url: 'http://www.fueleconomy.gov/ws/rest/vehicle/'+id+'',
             dataType: 'xml',
-            success: function(xml) {
+            success: function (xml) {
 
-                for (var i = 0; i < vehicleInfo.length; i++) {        
-                    var tempInfo = {
-                        'label': ,
-                        'val': ,
-                        'id': ,
-                    }
-                    vehicleInfo.push(tempInfo);
-                };
-
-                $(xml).find('menuItem').each(function() {
-                    if (selOption == $(this).find("text").text()) {
-                        vehicleid = $(this).find("value").text();
-                        console.log(vehicleid);
-                        getEmissions();
-                    } 
-                });
+                for (var i = 0; i < vehicleInfo.length; i++) {
+                    $(xml).find(vehicleInfo[i].label).each(function () {
+                        vehicleInfo[i].val = $(this).val();
+                        console.log(vehicleInfo[i].val)
+                    });
+                }               
             }
         });
     });
