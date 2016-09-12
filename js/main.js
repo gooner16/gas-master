@@ -1,5 +1,5 @@
 var selYear, selMake, selModel, selOption, vehicleid;
-var vehicleInfo = new Array(6);
+var vehicleInfo[];
 
 //clears options from dropdown box
 function removeOptions(selectbox)
